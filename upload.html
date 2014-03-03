@@ -1,0 +1,60 @@
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>Upload test</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width">
+</head>
+<body>
+{{> uploadDB}}
+</body>
+
+<template name="uploadDB">
+  <div class="container panel">
+    <H3>Upload Test App</H3>
+    <div class="loginTemp">
+      {{> loginButtons align="right"}}
+    </div>
+  </div>
+  <div class="container panel fileDrop">
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th> Drag a file onto the table below:
+          </th>
+        </tr>
+        <tr>
+          <th>Filename</th>
+          <th>ID</th>
+          <th>Owner</th>
+          <th>Size</th>
+          <th>Type</th>
+          <th>Thumb</th>
+        </tr>
+      </thead>
+      {{#each files}}
+        <tr>
+          <td><button type="button" class="close del-file" aria-hidden="true">&times;</button>
+          <a href="{{url}}">{{name}}</a></td>
+          <td>{{_id}}</td>
+          <td>
+            {{#if metadata.owner}}
+              {{metadata.owner}}
+            {{else}}
+              No owner
+            {{/if}}
+          </td>
+          <td>{{numeralSize}}</td>
+          <td>{{type}}</td>
+          <td>
+            {{#if isImage}}
+              <img id="{{fetchFile}}" alt="[ preview of {{name}} will display here ]" src="{{url}}" width="150">
+            {{/if}}
+          </td>
+        </tr>
+      {{/each}}
+    </table>
+  </div>
+</template>
+

@@ -1,0 +1,21 @@
+{
+  "packages": {
+    "bootstrap-3": {},
+    "collectionFS": {
+      "git": "https://github.com/CollectionFS/Meteor-CollectionFS.git",
+      "branch": "devel"
+    },
+    "cfs-gridfs": {
+      "git": "https://github.com/CollectionFS/Meteor-cfs-gridfs.git",
+      "branch": "master"
+    },
+    "cfs-filesystem": {
+      "git": "https://github.com/CollectionFS/Meteor-cfs-filesystem.git",
+      "branch": "master"
+    },
+    "cfs-handlebars": {
+      "git": "https://github.com/CollectionFS/Meteor-cfs-handlebars.git",
+      "branch": "shark"
+    }
+  }
+}
