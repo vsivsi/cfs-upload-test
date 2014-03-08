@@ -16,6 +16,7 @@
     "cfs-handlebars": {
       "git": "https://github.com/CollectionFS/Meteor-cfs-handlebars.git",
       "branch": "shark"
-    }
+    },
+    "numeral": {}
   }
 }

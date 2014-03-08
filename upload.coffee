@@ -1,4 +1,4 @@
-myFiles = new FS.Collection "filesColl", { stores: [new FS.Store.GridFS("filesGrid",{})] }
+myFiles = new FS.Collection "filesColl", { stores: [new FS.Store.GridFS("filesGrid",{}), new FS.Store.FileSystem("filesFS", {path: "~/uploads"})] }
 # myFiles = new FS.Collection "filesColl", { stores: [new FS.Store.FileSystem("filesFS", {path: "~/uploads"})] }
 
 if Meteor.isClient
@@ -34,8 +34,7 @@ if Meteor.isClient
       this._id
 
    Template.uploadDB.numeralSize = () ->
-      this.size
-      # numeral(this.size).format('0.0 b')
+      numeral(this.size).format('0.0 b')
 
 if Meteor.isServer
    # code to run on server at startup
