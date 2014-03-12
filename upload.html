@@ -21,11 +21,6 @@
     <table class="table table-bordered table-striped">
       <thead>
         <tr>
-          <th>
-           Drag a file onto the table below:
-          </th>
-        </tr>
-        <tr>
           <th>Filename</th>
           <th>ID</th>
           <th>Owner</th>
@@ -88,6 +83,10 @@
             {{/if}}
           </td>
         </tr>
+      {{else}}
+        <tr><td colspan="20" align=center>
+          <span class="text-info">Drag one or more files onto this table</span>
+        </td></tr>
       {{/each}}
     </table>
   </div>
