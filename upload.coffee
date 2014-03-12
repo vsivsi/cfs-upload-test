@@ -6,21 +6,14 @@ if Meteor.isClient
    Meteor.subscribe('allFiles')
 
    Template.uploadDB.events(
-      'drop .fileDrop' : (e) ->
+      'dropped .fileDrop' : (e) ->
          console.log 'Whoa, watch it buddy!'
-         e.stopPropagation()
-         e.preventDefault()
          loggedIn = Meteor.userId()
          for f, i in e.originalEvent.dataTransfer.files
             f.metadata = {owner: loggedIn} if loggedIn
             myFiles.insert f, (err, id) ->
                throw err if err
                console.log "File #{i}: #{id} in GridFS"
-
-      'dragenter, dragexit, dragover .fileDrop' : (e) ->
-         console.log 'What a drag!'
-         e.stopPropagation()
-         e.preventDefault()
 
       'click .del-file' : (e, t) ->
         console.log "Remove!", e, t, this
