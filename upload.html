@@ -27,38 +27,64 @@
         </tr>
         <tr>
           <th>Filename</th>
-          <th>Uploading</th>
           <th>ID</th>
           <th>Owner</th>
           <th>Size</th>
           <th>Type</th>
-          <th>Thumb</th>
+          <th>Thumbnail</th>
         </tr>
       </thead>
       {{#each files}}
         <tr>
-          <td><button type="button" class="close del-file" aria-hidden="true">&times;</button>
-          <a href="{{url}}">{{name}}</a></td>
           <td>
-            {{#if cfsIsUploading}}
-              Progress: {{cfsUploadProgress}}%
+          {{#if permission}}
+            {{#if url}}
+              <button type="button" class="close del-file" aria-hidden="true">&times;</button>
+              <a href="{{url}}">{{name}}</a>
             {{else}}
-              Uploaded
+              {{name}}
+              <span class="text-muted pull-right">
+                {{#if progress}}
+                  Uploading...
+                {{else}}
+                  Processing...
+                {{/if}}
+              </span>
+              <div class="progress">
+                <div class="progress-bar" role="progressbar" aria-valuenow="{{uploadProgress}}" aria-valuemin="0" aria-valuemax="100" style="width: {{uploadProgress}}%;">
+                  {{#if progress}}
+                    <span class="sr-only">{{uploadProgress}}% Complete</span>
+                  {{/if}}
+                </div>
+              </div>
             {{/if}}
+          {{else}}
+              {{name}} <span class="text-danger pull-right">Not owner</span>
+          {{/if}}
           </td>
           <td>{{_id}}</td>
           <td>
             {{#if metadata.owner}}
               {{metadata.owner}}
             {{else}}
-              No owner
+              <span class="text-muted">No owner</span>
             {{/if}}
           </td>
           <td>{{numeralSize}}</td>
-          <td>{{type}}</td>
           <td>
-            {{#if isImage}}
-              <img id="{{fetchFile}}" alt="[ preview of {{name}} will display here ]" src="{{url}}" width="150">
+            {{#if type}}
+              {{type}}
+            {{else}}
+              <span class="text-muted">No type</span>
+            {{/if}}
+          </td>
+          <td>
+            {{#if url}}
+              {{#if isImage}}
+                <img id="{{fetchFile}}" class="img-thumbnail" alt="[ preview of {{name}} will display here ]" src="{{url}}" width="150">
+              {{else}}
+                <span class="text-muted">Not an image</span>
+              {{/if}}
             {{/if}}
           </td>
         </tr>

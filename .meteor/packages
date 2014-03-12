@@ -6,10 +6,10 @@
 standard-app-packages
 coffeescript
 collectionFS
-cfs-handlebars
+cfs-gridfs
 accounts-ui
 accounts-password
 bootstrap-3
 cfs-filesystem
 numeral
-cfs-gridfs
+ui-dropped-event

@@ -13,10 +13,10 @@
       "git": "https://github.com/CollectionFS/Meteor-cfs-filesystem.git",
       "branch": "master"
     },
-    "cfs-handlebars": {
-      "git": "https://github.com/CollectionFS/Meteor-cfs-handlebars.git",
-      "branch": "shark"
-    },
-    "numeral": {}
+    "numeral": {},
+    "ui-dropped-event": {
+      "git": "https://github.com/CollectionFS/Meteor-ui-dropped-event.git",
+      "branch": "master"
+    }
   }
 }

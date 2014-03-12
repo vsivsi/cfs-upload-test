@@ -1,17 +1,13 @@
-# myFiles = new FS.Collection "filesColl", { chunkSize: 512*1024, stores: [new FS.Store.GridFS("filesGrid",{}), new FS.Store.FileSystem("filesFS", {path: "~/uploads"})] }
-# myFiles = new FS.Collection "filesColl", { chunkSize: 512*1024, stores: [new FS.Store.GridFS("filesGrid",{})] }
-myFiles = new FS.Collection "filesColl", { chunkSize: 2*1024*1024, stores: [new FS.Store.GridFS("filesGrid",{})] }
-# myFiles = new FS.Collection "filesColl", { chunkSize: 2*1024*1024, stores: [new FS.Store.FileSystem("filesFS", {path: "~/uploads"})] }
+# myFiles = new FS.Collection "filesColl", { stores: [new FS.Store.GridFS("filesGrid",{}), new FS.Store.FileSystem("filesFS", {path: "~/uploads"})] }
+myFiles = new FS.Collection "filesColl", { stores: [new FS.Store.GridFS("filesGrid",{})] }
+# myFiles = new FS.Collection "filesColl", { stores: [new FS.Store.FileSystem("filesFS", {path: "~/uploads"})] }
 
 if Meteor.isClient
 
    Meteor.subscribe('allFiles')
 
    Template.uploadDB.events(
-      'drop .fileDrop' : (e) ->
-         # console.log 'Whoa, watch it buddy!'
-         e.stopPropagation()
-         e.preventDefault()
+      'dropped .fileDrop' : (e) ->
          loggedIn = Meteor.userId()
          for f, i in e.originalEvent.dataTransfer.files
             f.metadata = {}
@@ -19,11 +15,6 @@ if Meteor.isClient
             myFiles.insert f, (err, id) ->
                throw err if err
                console.log "File #{i}: #{id} in GridFS -> ", f
-
-      'dragenter, dragexit, dragover .fileDrop' : (e) ->
-         # console.log 'What a drag!'
-         e.stopPropagation()
-         e.preventDefault()
 
       'click .del-file' : (e, t) ->
         console.log "Remove!", e, t, this
@@ -38,6 +29,12 @@ if Meteor.isClient
 
    Template.uploadDB.numeralSize = () ->
       numeral(this.size).format('0.0 b')
+
+   Template.uploadDB.progress = () ->
+      this.uploadProgress() < 100
+
+   Template.uploadDB.permission = () ->
+      not this.metadata.owner or this.metadata.owner is Meteor.userId()
 
 if Meteor.isServer
    # code to run on server at startup
