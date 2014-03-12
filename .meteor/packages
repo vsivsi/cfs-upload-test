@@ -6,10 +6,10 @@
 standard-app-packages
 coffeescript
 collectionFS
-cfs-gridfs
 cfs-handlebars
 accounts-ui
 accounts-password
 bootstrap-3
 cfs-filesystem
 numeral
+cfs-gridfs

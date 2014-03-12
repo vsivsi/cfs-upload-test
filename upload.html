@@ -27,6 +27,7 @@
         </tr>
         <tr>
           <th>Filename</th>
+          <th>Uploading</th>
           <th>ID</th>
           <th>Owner</th>
           <th>Size</th>
@@ -38,6 +39,13 @@
         <tr>
           <td><button type="button" class="close del-file" aria-hidden="true">&times;</button>
           <a href="{{url}}">{{name}}</a></td>
+          <td>
+            {{#if cfsIsUploading}}
+              Progress: {{cfsUploadProgress}}%
+            {{else}}
+              Uploaded
+            {{/if}}
+          </td>
           <td>{{_id}}</td>
           <td>
             {{#if metadata.owner}}

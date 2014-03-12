@@ -1,5 +1,7 @@
-myFiles = new FS.Collection "filesColl", { stores: [new FS.Store.GridFS("filesGrid",{}), new FS.Store.FileSystem("filesFS", {path: "~/uploads"})] }
-# myFiles = new FS.Collection "filesColl", { stores: [new FS.Store.FileSystem("filesFS", {path: "~/uploads"})] }
+# myFiles = new FS.Collection "filesColl", { chunkSize: 512*1024, stores: [new FS.Store.GridFS("filesGrid",{}), new FS.Store.FileSystem("filesFS", {path: "~/uploads"})] }
+# myFiles = new FS.Collection "filesColl", { chunkSize: 512*1024, stores: [new FS.Store.GridFS("filesGrid",{})] }
+myFiles = new FS.Collection "filesColl", { chunkSize: 2*1024*1024, stores: [new FS.Store.GridFS("filesGrid",{})] }
+# myFiles = new FS.Collection "filesColl", { chunkSize: 2*1024*1024, stores: [new FS.Store.FileSystem("filesFS", {path: "~/uploads"})] }
 
 if Meteor.isClient
 
@@ -7,18 +9,19 @@ if Meteor.isClient
 
    Template.uploadDB.events(
       'drop .fileDrop' : (e) ->
-         console.log 'Whoa, watch it buddy!'
+         # console.log 'Whoa, watch it buddy!'
          e.stopPropagation()
          e.preventDefault()
          loggedIn = Meteor.userId()
          for f, i in e.originalEvent.dataTransfer.files
-            f.metadata = {owner: loggedIn} if loggedIn
+            f.metadata = {}
+            f.metadata.owner = loggedIn if loggedIn
             myFiles.insert f, (err, id) ->
                throw err if err
-               console.log "File #{i}: #{id} in GridFS"
+               console.log "File #{i}: #{id} in GridFS -> ", f
 
       'dragenter, dragexit, dragover .fileDrop' : (e) ->
-         console.log 'What a drag!'
+         # console.log 'What a drag!'
          e.stopPropagation()
          e.preventDefault()
 
@@ -68,7 +71,7 @@ if Meteor.isServer
 
          insert: (userId, file) ->
             test = (not file.metadata?.owner?) or file.metadata.owner is userId
-            console.log "Insert fired for #{file.name} #{test} #{userId} #{file.metadata?.owner}"
+            console.log "Insert fired for #{file.name} #{test} #{userId}"
             test
 
       Meteor.users.deny({update: () -> true })
