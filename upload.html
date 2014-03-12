@@ -49,7 +49,15 @@
           <td>{{type}}</td>
           <td>
             {{#if isImage}}
-              <img id="{{fetchFile}}" alt="[ preview of {{name}} will display here ]" src="{{url}}" width="150">
+              {{#if url}}
+                <img id="{{fetchFile}}" alt="[ preview of {{name}} will display here ]" src="{{url}}" width="150">
+              {{else}}
+                <div class="progress">
+                  <div class="progress-bar" role="progressbar" aria-valuenow="{{uploadProgress}}" aria-valuemin="0" aria-valuemax="100" style="width: {{uploadProgress}}%;">
+                    <span class="sr-only">{{uploadProgress}}% Complete</span>
+                  </div>
+                </div>
+              {{/if}}
             {{/if}}
           </td>
         </tr>
